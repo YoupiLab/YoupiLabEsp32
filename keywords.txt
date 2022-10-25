@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For YoupilabLibraryEsp32
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+VeriyToConnectWifi KEYWORD1
+checkMyAdressIp KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+createPointAccess	KEYWORD2
+createServer KEYWORD2
+getPassword	KEYWORD2
+sendDataFloat KEYWORD2
+dynamicExecution KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)
