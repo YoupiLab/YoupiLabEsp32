@@ -1,33 +1,33 @@
-#include "YoupilabLibraryEsp32.h"
+#include "YoupiLabEsp32.h"
 
 
-YoupilabLibraryEsp32::YoupilabLibraryEsp32(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
+YoupiLabEsp32::YoupiLabEsp32(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
 
-YoupilabLibraryEsp32::YoupilabLibraryEsp32(){}
+YoupiLabEsp32::YoupiLabEsp32(){}
 
 /********************************************** Les SETTER ET GETTER */
-String YoupilabLibraryEsp32::getAppKey(){
+String YoupiLabEsp32::getAppKey(){
   return _APP_KEY;
 }
 
-String YoupilabLibraryEsp32::getAppId(){
+String YoupiLabEsp32::getAppId(){
   return _APP_ID;
 }
 
-void YoupilabLibraryEsp32::setAppKey(String appkey){
+void YoupiLabEsp32::setAppKey(String appkey){
        _APP_KEY = appkey;
 }
 
-void YoupilabLibraryEsp32::setAppID(String appid){
+void YoupiLabEsp32::setAppID(String appid){
       _APP_ID = appid;
 }
 
-String YoupilabLibraryEsp32::getBaseUrl(){
+String YoupiLabEsp32::getBaseUrl(){
      return _BASE_URL;
 }
 
 //permet de verifier si la carte esp c'est bien connecter
-void YoupilabLibraryEsp32::VeriyToConnectWifi(char* ssid, char* password){
+void YoupiLabEsp32::VeriyToConnectWifi(char* ssid, char* password){
   delay(200); 
   WiFi.begin(ssid, password);
   while(WiFi.status() != WL_CONNECTED){
@@ -42,21 +42,21 @@ void YoupilabLibraryEsp32::VeriyToConnectWifi(char* ssid, char* password){
 
 }
 
-void YoupilabLibraryEsp32::checkMyAdressIp(){
+void YoupiLabEsp32::checkMyAdressIp(){
   Serial.println("********** Votre adresse ID*************");
     Serial.print("Votre adresse Ip est : ");
     Serial.println(WiFi.localIP());
 }
 
 //creete reseau wifi un pourt d'acces
-void YoupilabLibraryEsp32::createPointAccess(char* ssid, char* password){
+void YoupiLabEsp32::createPointAccess(char* ssid, char* password){
     Serial.println("********** Creation du point d'access*************");
     WiFi.mode(WIFI_AP);
     WiFi.softAP(ssid, password);    
     Serial.println(WiFi.softAPIP());
 }
 
-void YoupilabLibraryEsp32::createServer(char* ssid, char* password){
+void YoupiLabEsp32::createServer(char* ssid, char* password){
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -75,7 +75,7 @@ void YoupilabLibraryEsp32::createServer(char* ssid, char* password){
 }
 
 
-void YoupilabLibraryEsp32::dynamicExecution(int led1, String APP_ID, String APP_KEY ){
+void YoupiLabEsp32::dynamicExecution(int led1, String APP_ID, String APP_KEY ){
     /***********recuperation des instructions a executer depuis la plateforme IoT ******/
     String url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + APP_ID + "&APP_KEY=" + APP_KEY;
     //String url = "https://test.iot.generalinvasion.com/api";
@@ -117,7 +117,7 @@ void YoupilabLibraryEsp32::dynamicExecution(int led1, String APP_ID, String APP_
     }
 }
 
-void YoupilabLibraryEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
+void YoupiLabEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID";
   
@@ -146,7 +146,7 @@ void YoupilabLibraryEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY
       }
 }
 
-//void YoupilabLibraryEsp32::createAccessBluetooth(String SERVICE_UUID, String CHARACTERISTIC_UUID){
+//void YoupiLabEsp32::createAccessBluetooth(String SERVICE_UUID, String CHARACTERISTIC_UUID){
 //  Serial.println("Starting BLE work!");
 //
 //  BLEDevice::init("Long name works now");

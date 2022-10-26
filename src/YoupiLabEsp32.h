@@ -9,11 +9,11 @@
 #include <BLEServer.h>
 
 
-struct YoupilabLibraryEsp32{
+struct YoupiLabEsp32{
   
    public:
-      YoupilabLibraryEsp32(String APP_KEY, String APP_ID);
-      YoupilabLibraryEsp32();
+      YoupiLabEsp32(String APP_KEY, String APP_ID);
+      YoupiLabEsp32();
       void VeriyToConnectWifi(char* ssid, char* password);
 
       void checkMyAdressIp();

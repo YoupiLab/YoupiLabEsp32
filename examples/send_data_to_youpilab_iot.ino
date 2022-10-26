@@ -1,4 +1,4 @@
-#include "YoupilabLibraryEsp32.h"
+#include <YoupiLabEsp32.h>
 char*  ssid = "YOUPILAB";
 char* password = "iloveyoupilab123";
 int pho_resistance= A0;
@@ -7,7 +7,7 @@ float datas = 2.34;
 String APP_ID     = "esp91ce0";  // Equipment APP ID
 String APP_KEY    = "c19071d5";  // Equipment Key
 
-YoupilabLibraryEsp32  esp(APP_ID,APP_KEY);
+YoupiLabEsp32  esp(APP_ID,APP_KEY);
 void setup(){
   Serial.begin(9600);
   //int result = addPoint(6,4 );

@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For YoupilabLibraryEsp32
+# Syntax Coloring Map For YoupiLabEsp32
 #######################################
 
 #######################################
