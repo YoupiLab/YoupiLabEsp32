@@ -29,7 +29,7 @@ struct YoupiLabEsp32{
       
        void sendDataIntegger(int px, String APP_ID, String APP_KEY);
 
-       void sendDataBoolean(int px, String APP_ID, String APP_KEY);
+       void sendDataBoolean(bool px, String APP_ID, String APP_KEY);
 
 
       void sendDataString(String px, String APP_ID, String APP_KEY);
