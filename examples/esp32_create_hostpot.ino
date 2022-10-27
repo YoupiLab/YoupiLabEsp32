@@ -9,7 +9,7 @@ YoupiLabEsp32  esp(APP_ID,APP_KEY);
 void setup(){
   Serial.begin(9600);
   
-  esp.createPointAccess(ssid,password);
+  esp.createPointAccess(ssid,password); //create hostpot
   
 }
 
