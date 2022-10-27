@@ -146,7 +146,7 @@ void YoupiLabEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
       }
 }
 
-void YoupiLabEsp32::sendDataString(String p, String APP_ID, String APP_KEY){
+void YoupiLabEsp32::sendDataString(String px, String APP_ID, String APP_KEY){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID";
   
@@ -154,7 +154,7 @@ void YoupiLabEsp32::sendDataString(String p, String APP_ID, String APP_KEY){
       post_url +="&APP_KEY=";
       post_url +=APP_KEY;
       post_url +="&P1=";
-      post_url +=p;                        
+      post_url +=px;                        
       Serial.println(post_url);
       /*Envoie de la reqette*/
      HTTPClient http;
