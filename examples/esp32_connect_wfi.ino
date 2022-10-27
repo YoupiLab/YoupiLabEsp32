@@ -9,7 +9,7 @@ YoupiLabEsp32  esp(APP_ID,APP_KEY);
 void setup(){
   Serial.begin(9600);
   //need to connect to wifi
-  esp.VeriyToConnectWifi(ssid,password);
+  esp.VeriyToConnectWifi(ssid,password); //connect esp32 to wifi
   
 }
 
