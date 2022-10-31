@@ -75,9 +75,9 @@ void YoupiLabEsp32::createServer(char* ssid, char* password){
 }
 
 
-void YoupiLabEsp32::dynamicExecution(int led1, String APP_ID, String APP_KEY ){
+void YoupiLabEsp32::dynamicExecution(int led1 ){
     /***********recuperation des instructions a executer depuis la plateforme IoT ******/
-    String url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + APP_ID + "&APP_KEY=" + APP_KEY;
+    String url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + _APP_ID + "&APP_KEY=" + _APP_KEY;
     //String url = "https://test.iot.generalinvasion.com/api";
     HTTPClient http;
     http.begin(url);  
@@ -119,7 +119,7 @@ void YoupiLabEsp32::dynamicExecution(int led1, String APP_ID, String APP_KEY ){
 
 void YoupiLabEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
 
-      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID";
+      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
       post_url+=APP_ID;
       post_url +="&APP_KEY=";
