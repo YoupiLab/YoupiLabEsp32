@@ -117,13 +117,13 @@ void YoupiLabEsp32::dynamicExecution(int led1 ){
     }
 }
 
-void YoupiLabEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
+void YoupiLabEsp32::sendDataFloat(float px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
-      post_url+=APP_ID;
+      post_url+=_APP_ID;
       post_url +="&APP_KEY=";
-      post_url +=APP_KEY;
+      post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
       Serial.println(post_url);
@@ -146,13 +146,13 @@ void YoupiLabEsp32::sendDataFloat(float px, String APP_ID, String APP_KEY){
       }
 }
 
-void YoupiLabEsp32::sendDataIntegger(int px, String APP_ID, String APP_KEY){
+void YoupiLabEsp32::sendDataIntegger(int px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
-      post_url+=APP_ID;
+      post_url+=_APP_ID;
       post_url +="&APP_KEY=";
-      post_url +=APP_KEY;
+      post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
       Serial.println(post_url);
@@ -175,13 +175,13 @@ void YoupiLabEsp32::sendDataIntegger(int px, String APP_ID, String APP_KEY){
       }
 }
 
-void YoupiLabEsp32::sendDataBoolean(bool px, String APP_ID, String APP_KEY){
+void YoupiLabEsp32::sendDataBoolean(bool px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
-      post_url+=APP_ID;
+      post_url+=_APP_ID;
       post_url +="&APP_KEY=";
-      post_url +=APP_KEY;
+      post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
       Serial.println(post_url);
