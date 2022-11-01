@@ -4,9 +4,9 @@
 #include <WiFiAP.h>
 //#include <WebServer.h>
 #include <HTTPClient.h>
-#include <BLEDevice.h>
-#include <BLEUtils.h>
-#include <BLEServer.h>
+// #include <BLEDevice.h>
+// #include <BLEUtils.h>
+// #include <BLEServer.h>
 
 
 struct YoupiLabEsp32{
