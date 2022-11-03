@@ -3,8 +3,6 @@
 
 YoupiLabEsp32::YoupiLabEsp32(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
 
-YoupiLabEsp32::YoupiLabEsp32(){}
-
 /********************************************** Les SETTER ET GETTER */
 String YoupiLabEsp32::getAppKey(){
   return _APP_KEY;
@@ -27,59 +25,43 @@ String YoupiLabEsp32::getBaseUrl(){
 }
 
 //permet de verifier si la carte esp c'est bien connecter
-void YoupiLabEsp32::VeriyToConnectWifi(char* ssid, char* password){
+int YoupiLabEsp32::veriyAndConnectToWifi(char* ssid, char* password){
   delay(200); 
   WiFi.begin(ssid, password);
   while(WiFi.status() != WL_CONNECTED){
-      Serial.println("tentative de connexion au wifi");
-      Serial.println(ssid);
-    delay(200); 
+     delay(500);
   }
-    Serial.println("Connexion resussi !!");
-    Serial.println("********** Votre adresse ID*************");
-    Serial.print("Votre adresse Ip est : ");
-    Serial.println(WiFi.localIP());
+   return 1;
 
 }
 
 void YoupiLabEsp32::checkMyAdressIp(){
-  Serial.println("********** Votre adresse ID*************");
-    Serial.print("Votre adresse Ip est : ");
+
     Serial.println(WiFi.localIP());
 }
 
 //creete reseau wifi un pourt d'acces
-void YoupiLabEsp32::createPointAccess(char* ssid, char* password){
-    Serial.println("********** Creation du point d'access*************");
-    WiFi.mode(WIFI_AP);
-    WiFi.softAP(ssid, password);    
-    Serial.println(WiFi.softAPIP());
+int YoupiLabEsp32::createPointAccess(char* ssid, char* password){
+
+      WiFi.mode(WIFI_AP);
+      WiFi.softAP(ssid, password); 
+      return 1;  
 }
 
-void YoupiLabEsp32::createServer(char* ssid, char* password){
-  // Connect to Wi-Fi network with SSID and password
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+int YoupiLabEsp32::createServer(char* ssid, char* password){
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
   }
   WiFiServer server(80);
-  // Print local IP address and start web server
-  Serial.println("Print local IP address and start web server");
-  Serial.println("WiFi connected.");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-  server.begin();
+  return 1;
 }
 
 
-void YoupiLabEsp32::dynamicExecution(int led1 ){
+int YoupiLabEsp32::executeAnAction(int led1 ){
     /***********recuperation des instructions a executer depuis la plateforme IoT ******/
     String url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + _APP_ID + "&APP_KEY=" + _APP_KEY;
-    //String url = "https://test.iot.generalinvasion.com/api";
-    HTTPClient http;
+   
     http.begin(url);  
     int httpResponseCode = http.GET();
     if (httpResponseCode > 0) {
@@ -102,22 +84,20 @@ void YoupiLabEsp32::dynamicExecution(int led1 ){
       if(etat1==1)
       {
         digitalWrite(led1, HIGH);
-        Serial.println("Led1 Allumé ");
+        return 1;
       }
       else
       {
         digitalWrite(led1, LOW);
-        Serial.println("Led1 Eteinte ");
+        return 0;
       }
     }
     else {
-      Serial.print("Error code: ");
-      Serial.println(httpResponseCode);
-      Serial.println(":-(");
+        return 2; // error network
     }
 }
 
-void YoupiLabEsp32::sendDataFloat(float px){
+int YoupiLabEsp32::sendDataFloat(float px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
@@ -126,27 +106,19 @@ void YoupiLabEsp32::sendDataFloat(float px){
       post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
-      Serial.println(post_url);
-      /*Envoie de la reqette*/
-     HTTPClient http;
-     http.begin(post_url);
+      /*send request*/
+      HTTPClient http;
     
       int httpResponseCode = http.GET();
       if (httpResponseCode > 0) {
-        Serial.print("HTTP ");
-        Serial.println(httpResponseCode);
-        String payload = http.getString();
-        Serial.println();
-        Serial.println(payload);
+        return 1;
       }
       else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
+        return 0;
       }
 }
 
-void YoupiLabEsp32::sendDataIntegger(int px){
+int YoupiLabEsp32::sendDataIntegger(int px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
@@ -155,27 +127,21 @@ void YoupiLabEsp32::sendDataIntegger(int px){
       post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
-      Serial.println(post_url);
-      /*Envoie de la reqette*/
-     HTTPClient http;
-     http.begin(post_url);
-    
+      /*send request*/
+      HTTPClient http;
+
       int httpResponseCode = http.GET();
       if (httpResponseCode > 0) {
-        Serial.print("HTTP ");
-        Serial.println(httpResponseCode);
+        
         String payload = http.getString();
-        Serial.println();
-        Serial.println(payload);
+        return 1;
       }
       else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
+        return 0;
       }
 }
 
-void YoupiLabEsp32::sendDataBoolean(bool px){
+int YoupiLabEsp32::sendDataBoolean(boolean px){
 
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
   
@@ -184,46 +150,161 @@ void YoupiLabEsp32::sendDataBoolean(bool px){
       post_url +=_APP_KEY;
       post_url +="&P1=";
       post_url +=px;                        
-      Serial.println(post_url);
-      /*Envoie de la reqette*/
-     HTTPClient http;
-     http.begin(post_url);
+      /*send request*/
+      HTTPClient http;
+     
     
       int httpResponseCode = http.GET();
       if (httpResponseCode > 0) {
         Serial.print("HTTP ");
         Serial.println(httpResponseCode);
         String payload = http.getString();
-        Serial.println();
-        Serial.println(payload);
+        return 1;
       }
       else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
+        return 0;
       }
 }
 
-//void YoupiLabEsp32::createAccessBluetooth(String SERVICE_UUID, String CHARACTERISTIC_UUID){
-//  Serial.println("Starting BLE work!");
-//
-//  BLEDevice::init("Long name works now");
-//  BLEServer *pServer = BLEDevice::createServer();
-//  BLEService *pService = pServer->createService(SERVICE_UUID);
-//  BLECharacteristic *pCharacteristic = pService->createCharacteristic(
-//                                         CHARACTERISTIC_UUID,
-//                                         BLECharacteristic::PROPERTY_READ |
-//                                         BLECharacteristic::PROPERTY_WRITE
-//                                       );
-//
-//  pCharacteristic->setValue("Hello World says Neil");
-//  pService->start();
-//  // BLEAdvertising *pAdvertising = pServer->getAdvertising();  // this still is working for backward compatibility
-//  BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
-//  pAdvertising->addServiceUUID(SERVICE_UUID);
-//  pAdvertising->setScanResponse(true);
-//  pAdvertising->setMinPreferred(0x06);  // functions that help with iPhone connections issue
-//  pAdvertising->setMinPreferred(0x12);
-//  BLEDevice::startAdvertising();
-//  Serial.println("Characteristic defined! Now you can read it in your phone!");
-//}
+void YoupiLabEsp32::retrieveInformation(String TERMINAL_ID){
+
+  String post_url = "https://iot.youpilab.com/api/terminal/?TERM=";
+  //ok good
+  post_url+=TERMINAL_ID;
+  int httpResponseCode = http.GET();
+  if (httpResponseCode > 0) {
+    // Serial.print("HTTP ");
+    // Serial.println(httpResponseCode);
+    String payload = http.getString();
+    // Serial.println();
+    Serial.println(payload);
+  }
+  else {
+    
+    Serial.println(httpResponseCode);
+    
+  }
+  delay(1000);
+}
+
+void YoupiLabEsp32::countData(){
+
+    String post_url = "https://iot.youpilab.com/api/data/count?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+
+      int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = http.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+    delay(1000);
+}
+
+void YoupiLabEsp32::retrieveAllData(String start, String end){
+
+    String post_url = "https://iot.youpilab.com/api/data/pull?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+    post_url +="&start=";
+    post_url +=start;
+    post_url +="&end=";
+    post_url +=end;
+
+          int httpResponseCode = http.GET();
+      if (httpResponseCode > 0) {
+        // Serial.print("HTTP ");
+        // Serial.println(httpResponseCode);
+        String payload = http.getString();
+        // Serial.println();
+       Serial.println(payload);
+      }
+      else {
+       
+        Serial.println(httpResponseCode);
+       
+      }
+      delay(1000);
+}
+void YoupiLabEsp32::getInformationForTerminal(){
+
+    String post_url = "https://iot.youpilab.com/api/data/count?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+      
+      int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = http.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+}
+
+void YoupiLabEsp32::executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION){
+
+    String post_url = "https://iot.youpilab.com/api/terminal/response/?TERM=";
+    //ok good
+    post_url+=TERMINAL;
+    post_url +="&TASK_ID=";
+    post_url +=TASK_ID;
+    post_url +="&RESP=";
+    post_url +=RESPONSE_OF_EXECUTION;
+    
+      int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = http.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+}
+
+void YoupiLabEsp32::sendFeedback(){
+
+    String post_url = "https://iot.youpilab.com/api/controls/executed?APP_ID";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+
+      int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = http.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+}
