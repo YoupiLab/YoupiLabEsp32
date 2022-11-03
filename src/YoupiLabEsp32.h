@@ -4,9 +4,9 @@
 #include <WiFiAP.h>
 //#include <WebServer.h>
 #include <HTTPClient.h>
-#include <BLEDevice.h>
-#include <BLEUtils.h>
-#include <BLEServer.h>
+// #include <BLEDevice.h>
+// #include <BLEUtils.h>
+// #include <BLEServer.h>
 
 
 struct YoupiLabEsp32{
@@ -23,16 +23,16 @@ struct YoupiLabEsp32{
 
       void createServer(char* ssid, char* password);
       
-      void sendDataFloat(float px, String APP_ID, String APP_KEY);
+      void sendDataFloat(float px);
       
-      void dynamicExecution(int led1, String APP_ID, String APP_KEY );
+      void dynamicExecution(int led1);
       
-       void sendDataIntegger(int px, String APP_ID, String APP_KEY);
+       void sendDataIntegger(int px);
 
-       void sendDataBoolean(int px, String APP_ID, String APP_KEY);
+       void sendDataBoolean(bool px);
 
 
-      void sendDataString(String px, String APP_ID, String APP_KEY);
+      void sendDataString(String px);
       
       String getAppKey();
       String getBaseUrl();
