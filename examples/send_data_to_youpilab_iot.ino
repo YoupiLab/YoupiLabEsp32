@@ -9,7 +9,6 @@ YoupiLabEsp32  esp(APP_ID,APP_KEY);
 void setup(){
   Serial.begin(9600);
   esp.veriyAndConnectToWifi(ssid,password);
-  pinMode(led1, OUTPUT);
   pinMode(pho_resistance, INPUT);
 }
 
@@ -18,7 +17,7 @@ void loop(){
    Serial.println(po);
    if(esp.sendDataFloat(po)==1){
         Serial.println("Envoie reussi");
-   } //send float information to our iot platform (https://iot.youpilab.com) 
+   } //send float data to our iot platform (https://iot.youpilab.com) 
     if(esp.sendDataFloat(po)==0){
         Serial.println("Echec d'envoie ");
    } 

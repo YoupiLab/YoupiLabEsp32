@@ -4,8 +4,6 @@
 #include <WiFiAP.h>
 #include <HTTPClient.h>
 
-// #include <BLEUtils.h>
-// #include <BLEServer.h>
 
 struct YoupiLabEsp32{
   
@@ -16,7 +14,7 @@ struct YoupiLabEsp32{
 
       void checkMyAdressIp(); // //allows to check your ip adress
 
-      int createPointAccess(char* ssid, char* password);  //allows to create access point to a wifi
+      int createAccessPoint(char* ssid, char* password);  //allows to create access point to a wifi
 
       int createServer(char* ssid, char* password);  //allows to create server to a wifi
 
@@ -30,17 +28,13 @@ struct YoupiLabEsp32{
 
       int executeAnAction(int led); //execute an action return 1 in case of success and 0 in case of failure
 
-      void retrieveInformation(String TERMINAL_ID);
+      int executeTerminalTask(String TERMINAL_ID);
 
       void countData();
 
-      void retrieveAllData(String start, String end);
-
-      void getInformationForTerminal();
-
       void sendFeedback();
 
-      void executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION);
+      int executeAnActionWithTerminal(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION);
 
       String getAppKey();
       String getBaseUrl();
